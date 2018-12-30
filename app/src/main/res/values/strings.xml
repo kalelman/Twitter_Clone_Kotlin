@@ -32,4 +32,7 @@
     <string name="text_sentiment_positive">Tweet Positive</string>
     <string name="text_sentiment_neutral">Tweet Neutral</string>
     <string name="text_sentiment_negative">Tweet Negative</string>
+    <string name="text_create_account">Create your account</string>
+    <string name="text_confirm_password">Confirm password</string>
+    <string name="text_password_not_match">Password does not match</string>
 </resources>
