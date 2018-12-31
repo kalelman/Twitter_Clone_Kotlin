@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.kalelman.twitter_kotlin.R;
 import com.parse.Parse;
+import com.parse.ParseUser;
 
 public class App extends Application {
 
@@ -17,5 +18,6 @@ public class App extends Application {
                 .server(getString(R.string.back4app_server_url))
                 .build()
         );
+        ParseUser.logOut();
     }
 }

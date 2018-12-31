@@ -1,6 +1,7 @@
 package com.kalelman.twitter_kotlin.view.activity
 
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.TextInputEditText
@@ -10,18 +11,39 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import butterknife.BindView
 import com.kalelman.twitter_kotlin.R
 import com.kalelman.twitter_kotlin.commons.SIGN_UP
 import com.kalelman.twitter_kotlin.commons.SUCCES_MESSAGE
 import com.kalelman.twitter_kotlin.commons.Tools
-import com.parse.ParseException
-import com.parse.ParseUser
-import com.parse.SignUpCallback
 import kotlinx.android.synthetic.main.activity_create_account.*
 import kotlinx.android.synthetic.main.layout_custom_alert_builder_signup.*
+import com.parse.ParseUser
 import kotlinx.android.synthetic.main.layout_custom_alert_builder_signup.view.*
 
+
 class CreateAccountActivity : AppCompatActivity() {
+
+    @BindView(R.id.til_username)
+    lateinit var tilUsername: TextInputLayout
+    @BindView(R.id.tiet_username)
+    lateinit var tietUsername: TextInputEditText
+    @BindView(R.id.til_email)
+    lateinit var tilEmail: TextInputLayout
+    @BindView(R.id.tiet_email)
+    lateinit var tietEmail: TextInputEditText
+    @BindView(R.id.til_password_ca)
+    lateinit var tilPassword: TextInputLayout
+    @BindView(R.id.tiet_password_ca)
+    lateinit var tietPassword: TextInputEditText
+    @BindView(R.id.til_password_confirm)
+    lateinit var tilConfirmPassword: TextInputLayout
+    @BindView(R.id.tiet_password_confirm)
+    lateinit var tietConfirmPassword: TextInputEditText
+    @BindView(R.id.btn_sign_up_account)
+    lateinit var btnSignUp: Button
+
+    private val user = ParseUser()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,25 +98,19 @@ class CreateAccountActivity : AppCompatActivity() {
             til_email.error = null
             til_password_ca.error = null
             til_password_confirm.error = null
-            Toast.makeText(this, "Pasaste", Toast.LENGTH_LONG).show()
             //btnSignUp.isEnabled = false
-            //signUp()
+            signUp()
         }
     }
 
     private fun signUp() {
-        val tietUserName = tiet_user_name.text.toString()
-        val tietPassword = tiet_password_ca.text.toString()
-        val tietEamil = tiet_email.text.toString()
-
-        val newUser = ParseUser()
-        newUser.username = tietUserName
-        newUser.setPassword(tietPassword)
-        newUser.email = tietEamil
-        newUser.signUpInBackground { e ->
+        //val user = ParseUser()
+        user.setUsername(tiet_user_name.text.toString())
+        user.setEmail(tiet_email.text.toString())
+        user.setPassword(tiet_password_ca.text.toString())
+        user.signUpInBackground { e ->
             if (e == null) {
                 Log.i(SIGN_UP, SUCCES_MESSAGE)
-                Tools.hideKeyboard(this)
                 redirectLogin()
             } else {
                 Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
@@ -104,15 +120,13 @@ class CreateAccountActivity : AppCompatActivity() {
 
     private fun redirectLogin() {
         // Inflates the dialog with custom view
+        val dialogView  = layoutInflater.inflate(R.layout.layout_custom_alert_builder_signup, null)
         val dialog = AlertDialog.Builder(this)
-        val dialogView = layoutInflater.inflate(R.layout.layout_custom_alert_builder_signup, null)
-        val btnAlert = btn_alert_succes
         dialog.setView(dialogView)
-        btnAlert.setOnClickListener(View.OnClickListener { dialog.setOnDismissListener { this } })
-        dialog.show()
-
-
-
+        val alertDialog = dialog.show()
+        dialogView.btn_alert_succes.setOnClickListener {
+            alertDialog.dismiss()
+            finish()
+        }
     }
-
 }
