@@ -20,7 +20,6 @@ class RecoverPasswordActivity : ToolBar() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_recover_password)
         setTextTranslate()
         setTitleActionBar("")
     }
@@ -70,8 +69,6 @@ class RecoverPasswordActivity : ToolBar() {
             finish()
         }
     }
-
-
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()

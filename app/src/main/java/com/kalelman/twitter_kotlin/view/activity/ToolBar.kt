@@ -10,10 +10,10 @@ abstract class ToolBar : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(getLayoutResource())
-        val toolbar:Toolbar = findViewById(R.id.toolbar)
+        val toolBar:Toolbar = findViewById(R.id.toolbar)
 
-        if (toolbar != null) {
-            setSupportActionBar(toolbar)
+        if (toolBar != null) {
+            setSupportActionBar(toolBar)
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_back_arrow)
         }
@@ -32,5 +32,4 @@ abstract class ToolBar : AppCompatActivity() {
     fun setTitleActionBar(titleActionBar: String) {
         supportActionBar!!.title = titleActionBar
     }
-
 }

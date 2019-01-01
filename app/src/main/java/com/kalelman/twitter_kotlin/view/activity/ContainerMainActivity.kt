@@ -1,8 +1,8 @@
 package com.kalelman.twitter_kotlin.view.activity
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.design.widget.TextInputEditText
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AlertDialog
@@ -10,23 +10,19 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import butterknife.BindView
 import com.kalelman.twitter_kotlin.R
-import com.kalelman.twitter_kotlin.R.id.txv_toolbar
 import com.kalelman.twitter_kotlin.commons.TWEET
 import com.kalelman.twitter_kotlin.commons.TWEET_FAILED
 import com.kalelman.twitter_kotlin.commons.TWEET_SEND
 import com.kalelman.twitter_kotlin.commons.USERNAME
 import com.kalelman.twitter_kotlin.view.fragment.ContentFragmentFeed
 import com.kalelman.twitter_kotlin.view.fragment.ContentFragmentFollowers
-import com.parse.ParseException
 import com.parse.ParseObject
 import com.parse.ParseUser
-import com.parse.SaveCallback
 import kotlinx.android.synthetic.main.layout_custom_alert_logout.view.*
+import kotlinx.android.synthetic.main.layout_custom_alert_twitter.*
 import kotlinx.android.synthetic.main.layout_custom_alert_twitter.view.*
 
 class ContainerMainActivity : ToolBar() {
@@ -40,11 +36,52 @@ class ContainerMainActivity : ToolBar() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_container_main)
         setTitleActionBar("")
         showMainScreen()
-        //setTitleActionBar("")
-        setText()
+        setTextTranslate()
+        setUpNavigationDrawer()
+    }
+
+    private fun setUpNavigationDrawer() {
+        val toolBar: Toolbar = findViewById(R.id.toolbar)
+        val drawerLayout : DrawerLayout = findViewById(R.id.drawer)
+        val navigationView : NavigationView = findViewById(R.id.navigation_view)
+
+        val toggle = object : ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.text_openDrawer, R.string.text_closeDrawer) {
+            override fun onDrawerOpened(drawerView: View) {
+                drawerView?.let { super.onDrawerOpened(it) }
+            }
+
+            override fun onDrawerClosed(drawerView: View) {
+                drawerView?.let { super.onDrawerClosed(it) }
+            }
+        }
+
+        drawerLayout.setDrawerListener(toggle)
+        toggle.syncState()
+
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            drawerLayout.closeDrawers()
+
+            when (menuItem.itemId) {
+                R.id.followers -> {
+                    showMainScreen()
+                    true
+                }
+
+                R.id.user_feed -> {
+                    showFeedUser()
+                    true
+                }
+
+                R.id.log_out -> {
+                    userLogOut()
+                    true
+                }
+
+                else -> false
+            }
+        }
     }
 
     /**
@@ -64,27 +101,28 @@ class ContainerMainActivity : ToolBar() {
      * @return
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.tweet)
-            sendTweet()
-        else if (item.itemId == R.id.feed)
-            showFeedUser()
-        else if (item.itemId == R.id.log_out_option)
-            userLogOut()
+        when {
+            item.itemId == R.id.tweet -> sendTweet()
+
+            item.itemId == R.id.feed -> showFeedUser()
+
+            item.itemId == R.id.log_out_option -> userLogOut()
+        }
         return super.onOptionsItemSelected(item)
     }
 
     private fun sendTweet() {
         // Inflates the dialog with custom view
         val dialogView = layoutInflater.inflate(R.layout.layout_custom_alert_twitter, null)
+        val tietSendTweet : TextInputEditText = dialogView.findViewById(R.id.tiet_tweet)
         val dialog = AlertDialog.Builder(this)
         dialog.setView(dialogView)
         val alertDialog = dialog.show()
 
         dialogView.btn_send_tweet.setOnClickListener {
-            val edtSendTweet: EditText = findViewById(R.id.edt_tweet)
 
             val tweet = ParseObject(TWEET)
-            tweet.put(TWEET, edtSendTweet.text.toString())
+            tweet.put(TWEET, tietSendTweet.text.toString())
             tweet.put(USERNAME, ParseUser.getCurrentUser().username)
 
             tweet.saveInBackground { e ->
@@ -104,9 +142,9 @@ class ContainerMainActivity : ToolBar() {
 
     }
 
-    private fun setText() {
-        val txvToolBar: TextView = findViewById(R.id.txv_toolbar)
-        txvToolBar.text = getString(R.string.text_followers)
+    private fun setTextTranslate() {
+        //val txvToolBar: TextView = findViewById(R.id.txv_toolbar)
+        //txvToolBar.text = getString(R.string.text_followers)
     }
 
     override fun getLayoutResource(): Int {
@@ -114,6 +152,8 @@ class ContainerMainActivity : ToolBar() {
     }
 
     private fun showMainScreen() {
+        val txvToolBar: TextView = findViewById(R.id.txv_toolbar)
+        txvToolBar.text = getString(R.string.text_followers)
         val fragmentFollowers = ContentFragmentFollowers()
         val ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.fragment, fragmentFollowers)
@@ -125,7 +165,9 @@ class ContainerMainActivity : ToolBar() {
      * Method for load the Feed for the User
      */
     private fun showFeedUser() {
-        //txvToolBar.setText(resources.getText(R.string.text_feed))
+        val txvToolBar: TextView = findViewById(R.id.txv_toolbar)
+        txvToolBar.text = getString(R.string.text_feed)
+
         val fragmentFeed = ContentFragmentFeed()
         val ff = supportFragmentManager.beginTransaction()
         ff.replace(R.id.fragment, fragmentFeed)
