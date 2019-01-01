@@ -10,6 +10,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import butterknife.BindView
 import com.kalelman.twitter_kotlin.R
@@ -22,7 +23,7 @@ import com.parse.ParseUser
 import kotlinx.android.synthetic.main.layout_custom_alert_builder_signup.view.*
 
 
-class CreateAccountActivity : AppCompatActivity() {
+class CreateAccountActivity : ToolBar() {
 
     @BindView(R.id.til_username)
     lateinit var tilUsername: TextInputLayout
@@ -47,7 +48,19 @@ class CreateAccountActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_account)
+        //setContentView(R.layout.activity_create_account)
+        setTextTranslate()
+        setTitleActionBar("")
+    }
+
+    override fun getLayoutResource(): Int {
+        return R.layout.activity_create_account
+
+    }
+
+    private fun setTextTranslate() {
+        val txvToolBar: TextView = findViewById(R.id.txv_toolbar)
+        txvToolBar.text = getString(R.string.text_sign_up)
     }
 
     fun onCreateAccountClicked(view: View) {
@@ -129,4 +142,10 @@ class CreateAccountActivity : AppCompatActivity() {
             finish()
         }
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+    
 }

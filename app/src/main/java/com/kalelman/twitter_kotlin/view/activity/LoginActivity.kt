@@ -61,7 +61,7 @@ class LoginActivity : AppCompatActivity() {
             til_user.error = null
             til_password.error = null
             //showProgress(true)
-            btn_login.isEnabled = false
+            //btn_login.isEnabled = false
             signIn(tietUsername, tietPassword)
         }
     }

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import com.kalelman.twitter_kotlin.R
 import com.kalelman.twitter_kotlin.commons.RECOVER_PASSWORD
@@ -15,11 +16,23 @@ import com.parse.ParseUser
 import kotlinx.android.synthetic.main.activity_recover_password.*
 import kotlinx.android.synthetic.main.layout_custom_alert_builder_reset_password.view.*
 
-class RecoverPasswordActivity : AppCompatActivity() {
+class RecoverPasswordActivity : ToolBar() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_recover_password)
+        //setContentView(R.layout.activity_recover_password)
+        setTextTranslate()
+        setTitleActionBar("")
+    }
+
+    private fun setTextTranslate() {
+        val txvToolBar: TextView = findViewById(R.id.txv_toolbar)
+        txvToolBar.text = getString(R.string.text_change_password)
+    }
+
+    override fun getLayoutResource(): Int {
+        return R.layout.activity_recover_password
+
     }
 
     fun onResetPasswordClicked(view: View) {
@@ -56,6 +69,13 @@ class RecoverPasswordActivity : AppCompatActivity() {
             alertDialog.dismiss()
             finish()
         }
+    }
+
+
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
 }

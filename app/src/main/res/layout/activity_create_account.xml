@@ -8,12 +8,12 @@
     android:orientation="vertical"
     tools:context=".view.activity.CreateAccountActivity">
 
-    <!--<include
+    <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar_item"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />-->
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txv_title_create_account"
