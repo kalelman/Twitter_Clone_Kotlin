@@ -1,14 +1,20 @@
 package com.kalelman.twitter_kotlin.view.activity
 
+import android.annotation.TargetApi
+import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.content.Intent
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.TextInputEditText
 import android.support.design.widget.TextInputLayout
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import butterknife.BindView
 import com.kalelman.twitter_kotlin.R
@@ -60,9 +66,10 @@ class LoginActivity : AppCompatActivity() {
         } else {
             til_user.error = null
             til_password.error = null
-            //showProgress(true)
-            //btn_login.isEnabled = false
+            showProgress()
             signIn(tietUsername, tietPassword)
+            //btn_login.isEnabled = false
+
         }
     }
 
@@ -70,13 +77,20 @@ class LoginActivity : AppCompatActivity() {
         startActivity(Intent(this, RecoverPasswordActivity::class.java))
     }
 
-    /*@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private fun showProgress(show: Boolean) {
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private fun showProgress() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            val progressDialog = ProgressDialog(this, R.string.text_progress_dialog_loading)
-            progressDialog.show()
+            val builder = AlertDialog.Builder(this)
+            val dialogView = layoutInflater.inflate(R.layout.layout_progress_dialog, null)
+            val message = dialogView.findViewById<TextView>(R.id.message)
+            message.text = "Loading..."
+            builder.setView(dialogView)
+            builder.setCancelable(false)
+            val dialog = builder.create()
+            dialog.show()
+            Handler().postDelayed({dialog.dismiss()}, 1000)
         }
-    }*/
+    }
 
     private fun signIn(user: String, password: String) {
         ParseUser.logInInBackground(user, password) { user, e ->

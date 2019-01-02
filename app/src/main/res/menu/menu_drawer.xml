@@ -3,19 +3,19 @@
 
     <item
         android:id="@+id/followers"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_circle_small"
         android:title="@string/text_followers"
         />
 
     <item
         android:id="@+id/user_feed"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_circle_small"
         android:title="@string/text_feed"
         />
 
     <item
         android:id="@+id/log_out"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_circle_small"
         android:title="@string/text_log_out"
         />
 
