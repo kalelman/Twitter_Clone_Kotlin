@@ -13,4 +13,16 @@
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
+    <!-- Theme for Button animation -->
+    <style name="RaisedButtonDark" parent="Theme.AppCompat.Light">
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <!-- Theme for Floating Action Button -->
+    <!--<style name="PrimaryActionButton" parent="Theme.AppCompat.Light">
+        <item name="controlBackground">@color/colorPrimary</item>
+    </style>-->
+
 </resources>

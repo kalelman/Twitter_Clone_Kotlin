@@ -20,6 +20,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    // exclude files that are not needed from the cloud client libraries
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/INDEX.LIST'
+    }
 }
 
 ext {
@@ -35,11 +48,16 @@ dependencies {
     implementation "com.android.support:design:$supportLibraryVersion"
     implementation "com.android.support:support-v4:$supportLibraryVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.roughike:bottom-bar:2.3.1'
     // Dependency for Parse SDK for Android
     implementation 'com.github.parse-community.Parse-SDK-Android:parse:1.18.5'
     //Butterknife
     implementation "com.jakewharton:butterknife:$butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
+    // include the language API
+    implementation "com.google.cloud:google-cloud-storage:$googleApiClientVersion"
+    implementation "com.google.cloud:google-cloud-language:$googleApiClientVersion"
+    implementation 'io.grpc:grpc-okhttp:1.10.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

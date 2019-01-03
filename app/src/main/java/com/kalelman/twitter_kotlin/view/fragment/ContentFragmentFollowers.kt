@@ -1,6 +1,7 @@
 package com.kalelman.twitter_kotlin.view.fragment
 
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.widget.*
 import com.kalelman.twitter_kotlin.R
 import com.kalelman.twitter_kotlin.commons.IS_FOLLOWING
 import com.kalelman.twitter_kotlin.commons.USERNAME
+import com.kalelman.twitter_kotlin.view.activity.ContainerMainActivity
 import com.parse.ParseUser
 import java.util.ArrayList
 
@@ -18,6 +20,14 @@ class ContentFragmentFollowers : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_content_followers, container, false)
+
+        setupFloatingActionButton(view)
+        setupListFollowers(view)
+
+        return view
+    }
+
+    private fun setupListFollowers(view: View) {
 
         val listView = view.findViewById<ListView>(R.id.listView_followers)
         listView.choiceMode = AbsListView.CHOICE_MODE_MULTIPLE
@@ -60,7 +70,12 @@ class ContentFragmentFollowers : Fragment() {
                 }
             }
         }
+    }
 
-        return view
+    private fun setupFloatingActionButton(view: View) {
+        val fab : FloatingActionButton = view.findViewById(R.id.fab)
+        fab.setOnClickListener {
+            (activity as ContainerMainActivity).sendTweet()
+        }
     }
 }

@@ -7,6 +7,7 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.Toolbar
+import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -19,10 +20,11 @@ import com.kalelman.twitter_kotlin.commons.TWEET_SEND
 import com.kalelman.twitter_kotlin.commons.USERNAME
 import com.kalelman.twitter_kotlin.view.fragment.ContentFragmentFeed
 import com.kalelman.twitter_kotlin.view.fragment.ContentFragmentFollowers
+import com.kalelman.twitter_kotlin.view.fragment.ContentFragmentUserFeed
 import com.parse.ParseObject
 import com.parse.ParseUser
+import com.roughike.bottombar.BottomBar
 import kotlinx.android.synthetic.main.layout_custom_alert_logout.view.*
-import kotlinx.android.synthetic.main.layout_custom_alert_twitter.*
 import kotlinx.android.synthetic.main.layout_custom_alert_twitter.view.*
 
 class ContainerMainActivity : ToolBar() {
@@ -40,10 +42,30 @@ class ContainerMainActivity : ToolBar() {
         showMainScreen()
         setTextTranslate()
         setUpNavigationDrawer()
+        setUpBottomBar()
+    }
+
+    private fun setUpBottomBar() {
+        val bottomBar = findViewById<BottomBar>(R.id.bottombar)
+
+        bottomBar.setOnTabSelectListener { tabId ->
+            when (tabId) {
+                R.id.followers -> {
+                    showMainScreen()
+                }
+                R.id.feed -> {
+                    showFeed()
+
+                }
+                R.id.your_feed -> {
+                    showUserFeed()
+                }
+            }
+        }
     }
 
     private fun setUpNavigationDrawer() {
-        val toolBar: Toolbar = findViewById(R.id.toolbar)
+        val toolBar: Toolbar = this.findViewById(R.id.toolbar)
         val drawerLayout : DrawerLayout = findViewById(R.id.drawer)
         val navigationView : NavigationView = findViewById(R.id.navigation_view)
 
@@ -70,7 +92,7 @@ class ContainerMainActivity : ToolBar() {
                 }
 
                 R.id.user_feed -> {
-                    showFeedUser()
+                    showFeed()
                     true
                 }
 
@@ -104,14 +126,14 @@ class ContainerMainActivity : ToolBar() {
         when {
             item.itemId == R.id.tweet -> sendTweet()
 
-            item.itemId == R.id.feed -> showFeedUser()
+            item.itemId == R.id.feed -> showFeed()
 
             item.itemId == R.id.log_out_option -> userLogOut()
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun sendTweet() {
+    fun sendTweet() {
         // Inflates the dialog with custom view
         val dialogView = layoutInflater.inflate(R.layout.layout_custom_alert_twitter, null)
         val tietSendTweet : TextInputEditText = dialogView.findViewById(R.id.tiet_tweet)
@@ -120,19 +142,23 @@ class ContainerMainActivity : ToolBar() {
         val alertDialog = dialog.show()
 
         dialogView.btn_send_tweet.setOnClickListener {
+            if (!TextUtils.isEmpty(tietSendTweet.text)) {
+                tietSendTweet.error = null
+                val tweet = ParseObject(TWEET)
+                tweet.put(TWEET, tietSendTweet.text.toString())
+                tweet.put(USERNAME, ParseUser.getCurrentUser().username)
 
-            val tweet = ParseObject(TWEET)
-            tweet.put(TWEET, tietSendTweet.text.toString())
-            tweet.put(USERNAME, ParseUser.getCurrentUser().username)
+                tweet.saveInBackground { e ->
+                    if (e == null) {
+                        alertDialog.dismiss()
+                        Toast.makeText(this@ContainerMainActivity, TWEET_SEND, Toast.LENGTH_SHORT).show()
 
-            tweet.saveInBackground { e ->
-                if (e == null) {
-                    alertDialog.dismiss()
-                    Toast.makeText(this@ContainerMainActivity, TWEET_SEND, Toast.LENGTH_SHORT).show()
-
-                } else {
-                    Toast.makeText(this@ContainerMainActivity, TWEET_FAILED, Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this@ContainerMainActivity, TWEET_FAILED, Toast.LENGTH_SHORT).show()
+                    }
                 }
+            } else {
+                tietSendTweet.error = getString(R.string.text_required_field)
             }
         }
 
@@ -164,15 +190,26 @@ class ContainerMainActivity : ToolBar() {
     /**
      * Method for load the Feed for the User
      */
-    private fun showFeedUser() {
+    private fun showFeed() {
         val txvToolBar: TextView = findViewById(R.id.txv_toolbar)
-        txvToolBar.text = getString(R.string.text_feed)
+        txvToolBar.text = getString(R.string.text_general_feed)
 
         val fragmentFeed = ContentFragmentFeed()
         val ff = supportFragmentManager.beginTransaction()
         ff.replace(R.id.fragment, fragmentFeed)
         ff.addToBackStack(null)
         ff.commit()
+    }
+
+    private fun showUserFeed() {
+        val txvToolBar: TextView = findViewById(R.id.txv_toolbar)
+        txvToolBar.text = getString(R.string.text_feed)
+
+        val fragmentUserFeed = ContentFragmentUserFeed()
+        val fuf = supportFragmentManager.beginTransaction()
+        fuf.replace(R.id.fragment, fragmentUserFeed)
+        fuf.addToBackStack(null)
+        fuf.commit()
     }
 
     override fun onBackPressed() {

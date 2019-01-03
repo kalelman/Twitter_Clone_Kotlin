@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/followers"
+        title="Followers"
+        barColorWhenSelected="@color/colorPrimary"
+        icon="@drawable/ic_followers"
+        />
+
+    <tab
+        id="@+id/feed"
+        title="Feed"
+        barColorWhenSelected="@color/colorPrimary"
+        icon="@drawable/ic_home"
+        />
+
+    <tab
+        id="@+id/your_feed"
+        title="Your Feed"
+        barColorWhenSelected="@color/colorPrimary"
+        icon="@drawable/ic_twitter_small"
+        />
+</tabs>

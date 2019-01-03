@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     tools:context=".view.activity.CreateAccountActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -23,9 +23,14 @@
         <FrameLayout
             android:id="@+id/fragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:paddingBottom="70dp"/>
 
-    </LinearLayout>
+        <include
+            android:id="@+id/bottombar"
+            layout="@layout/bottombar" />
+
+    </RelativeLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"

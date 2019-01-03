@@ -71,55 +71,63 @@ class CreateAccountActivity : ToolBar() {
 
         Tools.hideKeyboard(this)
 
-        if (TextUtils.isEmpty(tietUserName) && TextUtils.isEmpty(tietEamil) && TextUtils.isEmpty(tietPassword) && TextUtils.isEmpty(tietConfirmPassword)) {
-            til_username.error = getString(R.string.text_required_field)
-            til_email.error = getString(R.string.text_required_field)
-            til_password_ca.error = getString(R.string.text_required_field)
-            til_password_confirm.error = getString(R.string.text_required_field)
-        } else if (TextUtils.isEmpty(tietUserName)) {
-            til_username.error = getString(R.string.text_required_field)
-            til_email.error = null
-            til_password_ca.error = null
-            til_password_confirm.error = null
-        } else if (TextUtils.isEmpty(tietEamil)) {
-            til_username.error = null
-            til_email.error = getString(R.string.text_required_field)
-            til_password_ca.error = null
-            til_password_confirm.error = null
-        } else if (!Tools.isValidEmail(tietEamil)) {
-            til_username.error = null
-            til_email.error = getString(R.string.text_invalid_email)
-            til_password_ca.error = null
-            til_password_confirm.error = null
-        } else if (TextUtils.isEmpty(tietPassword)) {
-            til_username.error = null
-            til_email.error = null
-            til_password_ca.error = getString(R.string.text_required_field)
-            til_password_confirm.error = null
-        } else if(TextUtils.isEmpty(tietConfirmPassword)) {
-            til_username.error = null
-            til_email.error = null
-            til_password_ca.error = null
-            til_password_confirm.error = getString(R.string.text_required_field)
-        } else if (tietPassword != tietConfirmPassword) {
-            til_username.error = null
-            til_email.error = null
-            til_password_ca.error = getString(R.string.text_password_not_match)
-            til_password_confirm.error = getString(R.string.text_password_not_match)
-        } else {
-            til_username.error = null
-            til_email.error = null
-            til_password_ca.error = null
-            til_password_confirm.error = null
-            //btnSignUp.isEnabled = false
-            signUp()
+        when {
+            TextUtils.isEmpty(tietUserName) && TextUtils.isEmpty(tietEamil) && TextUtils.isEmpty(tietPassword) && TextUtils.isEmpty(tietConfirmPassword) -> {
+                til_username.error = getString(R.string.text_required_field)
+                til_email.error = getString(R.string.text_required_field)
+                til_password_ca.error = getString(R.string.text_required_field)
+                til_password_confirm.error = getString(R.string.text_required_field)
+            }
+            TextUtils.isEmpty(tietUserName) -> {
+                til_username.error = getString(R.string.text_required_field)
+                til_email.error = null
+                til_password_ca.error = null
+                til_password_confirm.error = null
+            }
+            TextUtils.isEmpty(tietEamil) -> {
+                til_username.error = null
+                til_email.error = getString(R.string.text_required_field)
+                til_password_ca.error = null
+                til_password_confirm.error = null
+            }
+            !Tools.isValidEmail(tietEamil) -> {
+                til_username.error = null
+                til_email.error = getString(R.string.text_invalid_email)
+                til_password_ca.error = null
+                til_password_confirm.error = null
+            }
+            TextUtils.isEmpty(tietPassword) -> {
+                til_username.error = null
+                til_email.error = null
+                til_password_ca.error = getString(R.string.text_required_field)
+                til_password_confirm.error = null
+            }
+            TextUtils.isEmpty(tietConfirmPassword) -> {
+                til_username.error = null
+                til_email.error = null
+                til_password_ca.error = null
+                til_password_confirm.error = getString(R.string.text_required_field)
+            }
+            tietPassword != tietConfirmPassword -> {
+                til_username.error = null
+                til_email.error = null
+                til_password_ca.error = getString(R.string.text_password_not_match)
+                til_password_confirm.error = getString(R.string.text_password_not_match)
+            }
+            else -> {
+                til_username.error = null
+                til_email.error = null
+                til_password_ca.error = null
+                til_password_confirm.error = null
+                //btnSignUp.isEnabled = false
+                signUp()
+            }
         }
     }
 
     private fun signUp() {
-        //val user = ParseUser()
-        user.setUsername(tiet_user_name.text.toString())
-        user.setEmail(tiet_email.text.toString())
+        user.username = tiet_user_name.text.toString()
+        user.email = tiet_email.text.toString()
         user.setPassword(tiet_password_ca.text.toString())
         user.signUpInBackground { e ->
             if (e == null) {
