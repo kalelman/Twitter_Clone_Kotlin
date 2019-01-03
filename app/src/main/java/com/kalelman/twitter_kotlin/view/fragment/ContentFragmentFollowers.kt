@@ -33,9 +33,9 @@ class ContentFragmentFollowers : Fragment() {
         listView.choiceMode = AbsListView.CHOICE_MODE_MULTIPLE
         val users = ArrayList<String>()
         val adapter = ArrayAdapter(activity!!, android.R.layout.simple_list_item_checked, users)
-        listView.adapter = adapter as ListAdapter?
+        listView.adapter = adapter
 
-        listView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
+        listView.onItemClickListener = AdapterView.OnItemClickListener { _, view, i, _ ->
             val checkedTextView = view as CheckedTextView
             if (checkedTextView.isChecked) {
                 Log.i("Info", "Checked!")

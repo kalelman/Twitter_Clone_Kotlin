@@ -29,13 +29,6 @@ import kotlinx.android.synthetic.main.layout_custom_alert_twitter.view.*
 
 class ContainerMainActivity : ToolBar() {
 
-    /*@BindView(R.id.txv_toolbar)
-    internal var txvToolBar: TextView? = null
-    @BindView(R.id.drawer)
-    internal var drawerLayout: DrawerLayout? = null
-    @BindView(R.id.navigation_view)
-    internal var navigationView: NavigationView? = null*/
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTitleActionBar("")
@@ -71,11 +64,11 @@ class ContainerMainActivity : ToolBar() {
 
         val toggle = object : ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.text_openDrawer, R.string.text_closeDrawer) {
             override fun onDrawerOpened(drawerView: View) {
-                drawerView?.let { super.onDrawerOpened(it) }
+                drawerView.let { super.onDrawerOpened(it) }
             }
 
             override fun onDrawerClosed(drawerView: View) {
-                drawerView?.let { super.onDrawerClosed(it) }
+                drawerView.let { super.onDrawerClosed(it) }
             }
         }
 

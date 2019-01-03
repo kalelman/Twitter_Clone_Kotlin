@@ -2,21 +2,16 @@ package com.kalelman.twitter_kotlin.view.activity
 
 import android.annotation.TargetApi
 import android.app.AlertDialog
-import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.support.design.widget.TextInputEditText
-import android.support.design.widget.TextInputLayout
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import butterknife.BindView
 import com.kalelman.twitter_kotlin.R
 import com.kalelman.twitter_kotlin.commons.LOGIN_TAG
 import com.kalelman.twitter_kotlin.commons.SUCCES_MESSAGE
@@ -26,17 +21,6 @@ import com.parse.ParseUser
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
-
-    @BindView(R.id.til_user)
-    lateinit var tilUser: TextInputLayout
-    @BindView(R.id.til_password)
-    lateinit var tilPassword: TextInputLayout
-    @BindView(R.id.tiet_username)
-    lateinit var tietUsername: TextInputEditText
-    @BindView(R.id.tiet_password)
-    lateinit var tietPassword: TextInputEditText
-    @BindView(R.id.btn_login)
-    lateinit var btnLogIn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

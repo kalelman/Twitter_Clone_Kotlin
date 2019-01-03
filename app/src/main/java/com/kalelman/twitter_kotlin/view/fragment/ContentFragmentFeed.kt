@@ -18,7 +18,6 @@ import com.kalelman.twitter_kotlin.R
 import com.kalelman.twitter_kotlin.commons.*
 import com.kalelman.twitter_kotlin.view.activity.ContainerMainActivity
 import com.parse.*
-import kotlinx.android.synthetic.main.fragment_content_feed.*
 import kotlinx.android.synthetic.main.layout_custom_alert_sentiment.view.*
 import java.io.IOException
 import java.util.ArrayList
@@ -32,9 +31,13 @@ class ContentFragmentFeed : Fragment() {
         val view : View = inflater.inflate(R.layout.fragment_content_feed, container, false)
 
         setupFloatingActionButton(view)
-
         prepareGoogleApi()
+        setupGeneralFeedList(view)
 
+        return view
+    }
+
+    private fun setupGeneralFeedList(view: View) {
         val listViewFeed = view.findViewById<ListView>(R.id.listView_feed)
 
         val tweetData = ArrayList<Map<String, String>>()
@@ -66,12 +69,10 @@ class ContentFragmentFeed : Fragment() {
         /**
          *  Listener for the row selected by the user and get the Tweet text
          */
-        listViewFeed.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+        listViewFeed.onItemClickListener = AdapterView.OnItemClickListener { _, view, _, _ ->
             val textTweet = view.findViewById<TextView>(android.R.id.text1)
             analyzeSentiment(textTweet.text.toString())
         }
-
-        return view
     }
 
     private fun setupFloatingActionButton(view: View) {
@@ -120,7 +121,7 @@ class ContentFragmentFeed : Fragment() {
                 imvSentiment.setImageResource(R.drawable.ic_emoji_positive)
                 txvSentiment.text = resources.getText(R.string.text_sentiment_positive)
             }
-            sentiment!! > -0.75 -> {
+            sentiment > -0.75 -> {
                 //show Alert Sentiment Neutral
                 layout.setBackgroundColor(resources.getColor(R.color.score_neutral))
                 imvSentiment.setImageResource(R.drawable.ic_emoji_neutral)
