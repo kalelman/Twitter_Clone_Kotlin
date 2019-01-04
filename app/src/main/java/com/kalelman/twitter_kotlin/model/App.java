@@ -6,6 +6,11 @@ import com.kalelman.twitter_kotlin.R;
 import com.parse.Parse;
 import com.parse.ParseUser;
 
+/**
+ * @autor Erick Rojas Perez</br><br>erick_rojas_perez@hotmail.com</br>
+ * @date January/03/2019
+ * @description Class that establish connexion to the backend
+ */
 public class App extends Application {
 
     @Override

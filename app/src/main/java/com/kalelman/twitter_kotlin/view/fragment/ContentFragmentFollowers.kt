@@ -15,7 +15,11 @@ import com.kalelman.twitter_kotlin.view.activity.ContainerMainActivity
 import com.parse.ParseUser
 import java.util.ArrayList
 
-
+/**
+ * @author Erick Rojas Perez</br><br>erick_rojas_perez@hotmail.com</br>
+ * @date January/03/2019
+ * @description Fragment for Initialize the list of Follower user and choose your followers
+ */
 class ContentFragmentFollowers : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

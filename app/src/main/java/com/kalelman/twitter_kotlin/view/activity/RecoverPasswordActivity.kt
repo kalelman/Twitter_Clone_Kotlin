@@ -16,6 +16,11 @@ import com.parse.ParseUser
 import kotlinx.android.synthetic.main.activity_recover_password.*
 import kotlinx.android.synthetic.main.layout_custom_alert_builder_reset_password.view.*
 
+/**
+ * @author Erick Rojas Perez</br><br>erick_rojas_perez@hotmail.com</br>
+ * @date January/03/2019</br>
+ * @description Activity for Reset your Password flow</br>
+ */
 class RecoverPasswordActivity : ToolBar() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,16 +29,25 @@ class RecoverPasswordActivity : ToolBar() {
         setTitleActionBar("")
     }
 
+    /**
+     * SetText for the custom view
+     */
     private fun setTextTranslate() {
         val txvToolBar: TextView = findViewById(R.id.txv_toolbar)
         txvToolBar.text = getString(R.string.text_change_password)
     }
 
+    /**
+     * Get the custom layout for the activity
+     */
     override fun getLayoutResource(): Int {
         return R.layout.activity_recover_password
 
     }
 
+    /**
+     * Validate and execute the flow for Reset the Password
+     */
     fun onResetPasswordClicked(view: View) {
         val edtEnterEmail = edt_enter_email.text.toString()
         Tools.hideKeyboard(this)
@@ -47,6 +61,9 @@ class RecoverPasswordActivity : ToolBar() {
         }
     }
 
+    /**
+     * Reset the Password notify to Backend and recive an email for reset password
+     */
     private fun resetPassword(edtEnterEmail: String) {
         ParseUser.requestPasswordResetInBackground(edtEnterEmail) { e ->
             if (e == null) {
@@ -58,6 +75,9 @@ class RecoverPasswordActivity : ToolBar() {
         }
     }
 
+    /**
+     * When the Reset Password flow is complete automatically the user is redirect to Login
+     */
     private fun redirectLogin() {
         // Inflates the dialog with custom view
         val dialogView  = layoutInflater.inflate(R.layout.layout_custom_alert_builder_reset_password, null)
@@ -70,6 +90,9 @@ class RecoverPasswordActivity : ToolBar() {
         }
     }
 
+    /**
+     * Support the back button navigation in the AppBar
+     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true

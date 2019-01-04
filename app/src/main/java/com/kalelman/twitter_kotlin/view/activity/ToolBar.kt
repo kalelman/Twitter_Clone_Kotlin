@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import com.kalelman.twitter_kotlin.R
 
+/**
+ * Custom Class for Generic AppBar for all the App navigation
+ */
 abstract class ToolBar : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

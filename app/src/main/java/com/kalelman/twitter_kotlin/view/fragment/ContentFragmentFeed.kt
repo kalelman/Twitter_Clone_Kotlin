@@ -23,6 +23,12 @@ import java.io.IOException
 import java.util.ArrayList
 import java.util.HashMap
 
+/**
+ * @author Erick Rojas Perez</br><br>erick_rojas_perez@hotmail.com</br>
+ * @date January/03/2019</br>
+ * @description Fragment class for show the list of Tweets of the user that you are following
+ * and get the Sentiment score calling the Google API
+ */
 class ContentFragmentFeed : Fragment() {
 
     private var mLanguageClient: LanguageServiceClient? = null
@@ -37,6 +43,10 @@ class ContentFragmentFeed : Fragment() {
         return view
     }
 
+    /**
+     * Set up the list for the user for Twitter Clone
+     * consulting to the Backend
+     */
     private fun setupGeneralFeedList(view: View) {
         val listViewFeed = view.findViewById<ListView>(R.id.listView_feed)
 
@@ -75,6 +85,10 @@ class ContentFragmentFeed : Fragment() {
         }
     }
 
+    /**
+     * Method for initialize the Floating Action Button
+     * in all App
+     */
     private fun setupFloatingActionButton(view: View) {
         val fab : FloatingActionButton = view.findViewById(R.id.fab)
         fab.setOnClickListener {
@@ -82,6 +96,9 @@ class ContentFragmentFeed : Fragment() {
         }
     }
 
+    /**
+     * Initialize the Google Cloud Natural language by google credential
+     */
     private fun prepareGoogleApi() {
         // create the language client
         try {
@@ -100,6 +117,10 @@ class ContentFragmentFeed : Fragment() {
         }
     }
 
+    /**
+     * Method that analyze the Sentiment of the Tweet text and get the Score
+     * for the Goolge API
+     */
     private fun analyzeSentiment(text: String) {
 
         val doc = Document.newBuilder().setContent(text).setType(Document.Type.PLAIN_TEXT).build()
@@ -108,6 +129,10 @@ class ContentFragmentFeed : Fragment() {
         showAlertSentiment(sentiment?.score)
     }
 
+    /**
+     * Depending of the score of the sentiment inflate a custom Dialog for
+     * Positive, Neutral or Negative sentiment score
+     */
     private fun showAlertSentiment(sentiment: Float?) {
         val dialogView = layoutInflater.inflate(R.layout.layout_custom_alert_sentiment, null)
         val layout : ConstraintLayout = dialogView.findViewById(R.id.background_alert)

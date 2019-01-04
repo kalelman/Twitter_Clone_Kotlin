@@ -20,6 +20,11 @@ import com.parse.ParseInstallation
 import com.parse.ParseUser
 import kotlinx.android.synthetic.main.activity_login.*
 
+/**
+ * @autor Erick Rojas Perez</br><br>erick_rojas_perez@hotmail.com<br>
+ * @date January/03/2019</br>
+ * @description Activity for manage the Login process in Twitter Clone</br>
+ */
 class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,10 +35,16 @@ class LoginActivity : AppCompatActivity() {
         ParseInstallation.getCurrentInstallation().saveInBackground()
     }
 
+    /**
+     * Go to CreateAccountActivity
+     */
     fun onCreatedAccountClicked(view: View) {
         startActivity(Intent(this, CreateAccountActivity::class.java))
     }
 
+    /**
+     * Method that validate and execute the Login process and notify to Backend
+     */
     fun onLoginClicked(view: View) {
         val tietUsername = tiet_username.text.toString()
         val tietPassword = tiet_password.text.toString()
@@ -57,10 +68,16 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Go to RecoverPasswordActivity
+     */
     fun onRecoverPasswordClicked(view: View) {
         startActivity(Intent(this, RecoverPasswordActivity::class.java))
     }
 
+    /**
+     * Show ProgressDialog in Login Process
+     */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private fun showProgress() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
@@ -76,6 +93,10 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Login process and notify to Backend
+     * go to ContainerMainActivity
+     */
     private fun signIn(user: String, password: String) {
         ParseUser.logInInBackground(user, password) { user, e ->
             if (e == null) {

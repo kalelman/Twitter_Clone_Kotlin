@@ -27,6 +27,11 @@ import com.roughike.bottombar.BottomBar
 import kotlinx.android.synthetic.main.layout_custom_alert_logout.view.*
 import kotlinx.android.synthetic.main.layout_custom_alert_twitter.view.*
 
+/**
+ * @author Erick Rojas Perez</br><br>erick_rojas_perez@hotmail.com</br>
+ * @date January/03/2019
+ * @description Main container class that setup the structure and navigation app
+ */
 class ContainerMainActivity : ToolBar() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +43,9 @@ class ContainerMainActivity : ToolBar() {
         setUpBottomBar()
     }
 
+    /**
+     * Setup the BottomBar for improving navigation for the user
+     */
     private fun setUpBottomBar() {
         val bottomBar = findViewById<BottomBar>(R.id.bottombar)
 
@@ -57,6 +65,9 @@ class ContainerMainActivity : ToolBar() {
         }
     }
 
+    /**
+     * Settup the NavigationDrawer for the lateral menu
+     */
     private fun setUpNavigationDrawer() {
         val toolBar: Toolbar = this.findViewById(R.id.toolbar)
         val drawerLayout : DrawerLayout = findViewById(R.id.drawer)
@@ -111,7 +122,7 @@ class ContainerMainActivity : ToolBar() {
     }
 
     /**
-     * Custo menu for selecting the options in Twitter Clone
+     * Custom menu for selecting the options in Twitter Clone
      * @param item
      * @return
      */
@@ -126,6 +137,10 @@ class ContainerMainActivity : ToolBar() {
         return super.onOptionsItemSelected(item)
     }
 
+    /**
+     * Inflate a Custom View in an AlertDialog and using the Parse Class send and save the Tweets
+     * in the Backend Back4App
+     */
     fun sendTweet() {
         // Inflates the dialog with custom view
         val dialogView = layoutInflater.inflate(R.layout.layout_custom_alert_twitter, null)
@@ -166,10 +181,16 @@ class ContainerMainActivity : ToolBar() {
         //txvToolBar.text = getString(R.string.text_followers)
     }
 
+    /**
+     * get the Layout resource and load in the container
+     */
     override fun getLayoutResource(): Int {
         return R.layout.activity_container_main
     }
 
+    /**
+     * when the container Activity is created automatically load the ContentFragmentFollowers Fragment
+     */
     private fun showMainScreen() {
         val txvToolBar: TextView = findViewById(R.id.txv_toolbar)
         txvToolBar.text = getString(R.string.text_followers)
@@ -194,6 +215,10 @@ class ContainerMainActivity : ToolBar() {
         ff.commit()
     }
 
+    /**
+     * This method load the ContentFragmentUserFeed Fragment using
+     * Fragment Activity class
+     */
     private fun showUserFeed() {
         val txvToolBar: TextView = findViewById(R.id.txv_toolbar)
         txvToolBar.text = getString(R.string.text_feed)
@@ -205,10 +230,17 @@ class ContainerMainActivity : ToolBar() {
         fuf.commit()
     }
 
+    /**
+     * In the case that the user try to go back to the previous activity
+     * (LoginActivity) show an AlertDialog custom asking for finish session
+     */
     override fun onBackPressed() {
         userLogOut()
     }
 
+    /**
+     * Show an AlertDialog for finish session
+     */
     private fun userLogOut() {
         // Inflates the dialog with custom view
         val dialogView = layoutInflater.inflate(R.layout.layout_custom_alert_logout, null)

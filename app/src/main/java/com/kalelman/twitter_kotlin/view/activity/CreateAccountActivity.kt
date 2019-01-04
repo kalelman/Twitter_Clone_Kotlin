@@ -15,7 +15,11 @@ import kotlinx.android.synthetic.main.activity_create_account.*
 import com.parse.ParseUser
 import kotlinx.android.synthetic.main.layout_custom_alert_builder_signup.view.*
 
-
+/**
+ * @author Erick Rojas Perez</br><br>erick_rojas_perez@hotmail.com</br>
+ * @date January/03/2019
+ * @description Activity for Create Account for User
+ */
 class CreateAccountActivity : ToolBar() {
 
     private val user = ParseUser()
@@ -26,16 +30,26 @@ class CreateAccountActivity : ToolBar() {
         setTitleActionBar("")
     }
 
+    /**
+     * get the Layout resource and load in the container
+     */
     override fun getLayoutResource(): Int {
         return R.layout.activity_create_account
 
     }
 
+    /**
+     * SetText for the custom view
+     */
     private fun setTextTranslate() {
         val txvToolBar: TextView = findViewById(R.id.txv_toolbar)
         txvToolBar.text = getString(R.string.text_sign_up)
     }
 
+    /**
+     * Method that validate the input information for the user and
+     * create a new account and save the data in Backend
+     */
     fun onCreateAccountClicked(view: View) {
         val tietUserName = tiet_user_name.text.toString()
         val tietEamil = tiet_email.text.toString()
@@ -98,6 +112,9 @@ class CreateAccountActivity : ToolBar() {
         }
     }
 
+    /**
+     * Save the information in Backend
+     */
     private fun signUp() {
         user.username = tiet_user_name.text.toString()
         user.email = tiet_email.text.toString()
@@ -112,6 +129,10 @@ class CreateAccountActivity : ToolBar() {
         }
     }
 
+    /**
+     * Automatically when the process of create a new account is complete
+     * the flow of the app is automatically redirect to LoginActivity
+     */
     private fun redirectLogin() {
         // Inflates the dialog with custom view
         val dialogView  = layoutInflater.inflate(R.layout.layout_custom_alert_builder_signup, null)
@@ -124,6 +145,9 @@ class CreateAccountActivity : ToolBar() {
         }
     }
 
+    /**
+     * Bring support for the back Button in AppBar
+     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
